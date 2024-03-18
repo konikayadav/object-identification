@@ -1,5 +1,5 @@
 body {
-    background-image: url("background.jpg");
+    background-image: url("background\(1\).png");
     background-position: center;
     background-size: cover;
 }
@@ -17,8 +17,7 @@ body {
     font-size: 18px;
 }
 
-canvas {
-    border: 10px ridge burlywood;
-    border-radius: 20px;
-    box-shadow: 10px 10px 20px rgb(228, 178, 112);
+a {
+    text-decoration: none;
+    color: white;
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>Bottle</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    
+      <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+      
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <style>
+        canvas {
+    border: 10px ridge burlywood;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px rgb(228, 178, 112);
+    margin-top: 200px;
+}
+      </style>
+    </head>
+<body>
+    <div class = "container">
+    <button class="btn btn-danger"><a href = "index.html">BACK</a></button>
+    <center>
+    <h1>Bottle</h1>
+    <h3 class="btn btn-info" id="status">Status</h3>
+    <h3 class="btn btn-success" id="number">Number of objects: </h3>
+</center>
+</div>
+<script>
+objects = [];
+status = "";
+function preload() {
+    bottle = loadImage("Bottle.jpg");
+}
+function setup() {
+    canvas = createCanvas(600,500);
+    canvas.center();
+    cocossd = ml5.objectDetector("cocossd",modelloaded);
+}
+function draw() {
+    image(bottle,0,0,600,500);
+    if(status != "") {
+        for(i = 0; i<objects.length;i++){
+            stroke("red");
+            noFill();
+        rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height);
+        document.getElementById("number").innerHTML = "Number of objects detected: " + objects.length;
+
+    }
+    }
+
+}
+function modelloaded() {
+    console.log("model is successfully loaded :)");
+    document.getElementById("status").innerHTML = "Status: detecting objects";
+    cocossd.detect(bottle,gotResults);
+    status = true;
+}
+function gotResults(error,result) {
+    if(error) {
+        console.log(error);
+    }else {
+        console.log(result);
+        document.getElementById("status").innerHTML = "Status: objects are detected.";
+        objects = result;
+    }
+}
+</script>
+</body>
+</html>
